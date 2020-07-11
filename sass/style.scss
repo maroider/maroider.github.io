@@ -1,7 +1,7 @@
 @import "palette";
 
 $medium-width: 52rem;
-$small-width: 62rem;
+$large-width: 62rem;
 
 $normal-sidebar-width: 16rem;
 $medium-sidebar-width: 12rem;
@@ -9,10 +9,16 @@ $medium-sidebar-width: 12rem;
 html {
   box-sizing: border-box;
   font-family: "Arial", sans-serif;
-  font-size: 16px;
+  font-size: 20px;
 }
 
-@media (min-width: $small-width) {
+@media (min-width: $medium-width) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: $large-width) {
   html {
     font-size: 20px;
   }
@@ -112,7 +118,7 @@ div#sidebar {
     }
   }
 }
-@media(min-width: $small-width) {
+@media(min-width: $large-width) {
   div#sidebar {
     width: $normal-sidebar-width;
 
@@ -147,7 +153,7 @@ div#content {
     margin-left: $medium-sidebar-width;
   }
 }
-@media (min-width: $small-width) {
+@media (min-width: $large-width) {
   div#content {
     margin-left: $normal-sidebar-width;
   }
