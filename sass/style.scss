@@ -1,0 +1,188 @@
+@import "palette";
+
+html {
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+  /* This may be a bit excessive */
+  margin: 0px;
+  // outline: 1px solid red;
+}
+
+/* This lets empty `div`s take up space */
+div:after:empty {
+  content: '&#x200B';
+  user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+$medium-width: 80em;
+$small-width: 45em;
+
+$normal-sidebar-width: 20em;
+$medium-sidebar-width: 15em;
+
+div#sidebar {
+  background-color: $color-primary-3;
+  position: fixed;
+  width: $normal-sidebar-width;
+  height: 100vh;
+
+  div#sidebar-top, div#sidebar-bottom {
+    position: absolute;
+
+    padding-left: 2.5em;
+    padding-right: 4.5em;
+
+    text-align: center;
+  }
+
+  div#sidebar-top {
+    top: 20px;
+
+    h1 {
+      color: white;
+      font-size: 40px;
+    }
+  }
+
+  div#sidebar-bottom {
+    bottom: 20px;
+
+    div.items {
+      position: relative;
+
+      a {
+        /* Not sure why this is needed for margins and padding to behave sensible */
+        display: inline-block;
+
+        color: white;
+        text-decoration: none;
+        margin-top: 2.5px;
+        padding-bottom: 2.5px;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      a.home {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+
+    p#license-blurb, p#license-blurb a {
+      color: $color-secondary-2-1;
+      font-size: 11px;
+    }
+    p#license-blurb {
+      margin-top: 1em;
+    }
+  }
+}
+@media(max-width: $medium-width) {
+  div#sidebar {
+    width: $medium-sidebar-width;
+
+    div#sidebar-top {
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    div#sidebar-top, div#sidebar-bottom {
+      padding-left: 1.5em;
+      padding-right: 3.5em;
+    }
+  }
+}
+@media(max-width: $small-width) {
+  div#sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    div#sidebar-top, div#sidebar-bottom {
+      position: static;
+      padding-bottom: 1em;
+    }
+  }
+}
+
+div#content {
+  margin-left: $normal-sidebar-width;
+  min-height: 100vh;
+  padding-left: 2em;
+  background-color: $color-secondary-1-1;
+
+  pre#tera-context-dump {
+    background-color: $color-secondary-2-0;
+    color: white;
+    width: min-content;
+    padding: 1em;
+  }
+}
+@media (max-width: $medium-width) {
+  div#content {
+    margin-left: $medium-sidebar-width;
+  }
+}
+@media (max-width: $small-width) {
+  div#content {
+    margin-left: 0px;
+  }
+}
+
+div.page-card {
+  padding-top: 2em;
+}
+
+div.page-card, div.page {
+  .page-title {
+    color: $color-secondary-2-4;
+    text-decoration: none;
+  }
+  a.page-title:hover {
+    text-decoration: underline;
+  }
+  .page-date {
+    color: $color-secondary-2-2;
+    padding-bottom: 2em;
+  }
+}
+
+div.page {
+  .page-title {
+    padding-top: 1em;
+  }
+
+  div.main-content {
+    padding-bottom: 2em;
+
+    h1, h2, h3, h4, h5, h6 {
+      color: $color-secondary-2-4;
+      padding-bottom: 0.5em;
+    }
+
+    p {
+      padding-top: 0.25em;
+      padding-bottom: 0.25em;
+      line-height: 1.25em;
+    }
+  }
+
+  padding-right: 2em;
+  max-width: 50em;
+}
+
+pre {
+  overflow: auto;
+  padding: 1em;
+}

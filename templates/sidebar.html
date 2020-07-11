@@ -1,0 +1,30 @@
+{% macro sidebar(title="", home="", section, links) %}
+<div id="sidebar">
+  <div id="sidebar-top">
+    <h1>{{ title }}</h1>
+  </div>
+  <div id="sidebar-bottom">
+    <div class="items">
+      {%- if home != "" -%}
+      <a class="home" href="{{ home | safe }}">Home</a><br />
+      {%- endif -%}
+      {#- FIXME: This does not deal with more than one level of ancestors -#}
+      {%- for ancestor_path in section.ancestors -%}
+      {%- set ancestor = get_section(path=ancestor_path) -%}
+        {%- for subsection_path in ancestor.subsections -%}
+        {%- set subsection = get_section(path=subsection_path) %}
+          <a href="{{ "/" ~ subsection.path | safe }}">{{ subsection.title }}</a><br />
+        {%- endfor -%}
+      {%- endfor -%}
+      {%- for subsection in section.subsections -%}
+        {%- set subsection = get_section(path=subsection) %}
+        <a href="{{ "/" ~ subsection.path | safe }}">{{ subsection.title }}</a><br />
+      {%- endfor -%}
+      {%- for link in links %}
+        <a href="{{ link.url | safe }}">{{ link.label }}</a><br />
+      {%- endfor %}
+    </div>
+    <p id="license-blurb">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+  </div>
+</div>
+{%- endmacro sidebar -%}

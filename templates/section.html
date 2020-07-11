@@ -1,0 +1,19 @@
+{% extends "base.html" -%}
+{%- import "sidebar.html" as sidebar -%}
+{%- block body -%}
+
+{{ sidebar::sidebar(title=config.title, home="/", section=section, links=config.extra.links) }}
+<div id="content">
+  {%- if config.extra.dump_tera_context -%}
+    <pre id="tera-context-dump">{{ __tera_context | escape }}</pre>
+  {%- endif -%}
+  {%- block content -%}
+    {%- for page in section.pages -%}
+      <div class="page-card">
+        <a class = "page-title" href="{{ get_url(path=page.path) | safe }}"><h1>{{ page.title }}</h1></a>
+        <p class="page-date">{{ page.date }}</p>
+      </div>
+    {%- endfor -%}
+  {%- endblock content %}
+</div>
+{% endblock -%}

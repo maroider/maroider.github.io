@@ -1,0 +1,7 @@
+{% extends "base.html" -%}
+
+{%- block body -%}
+{%- if config.extra.dump_tera_context %}
+<pre>{{ __tera_context | escape }}</pre>
+{% endif -%}
+{%- endblock -%}

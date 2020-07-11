@@ -1,0 +1,21 @@
+base_url = "https://maroider.github.io/"
+
+title = "maroider's pages"
+description = ""
+
+default_language = "en"
+
+highlight_code = true
+highlight_theme = "dracula"
+
+taxonomies = [
+    {name = "tags", feed = false},
+]
+
+compile_sass = true
+
+[extra]
+links = [
+    { url="https://github.com/maroider/maroider.github.io", label="GitHub" }
+]
+dump_tera_context = false
