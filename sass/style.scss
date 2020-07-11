@@ -1,9 +1,21 @@
 @import "palette";
 
+$medium-width: 52rem;
+$small-width: 62rem;
+
+$normal-sidebar-width: 16rem;
+$medium-sidebar-width: 12rem;
+
 html {
   box-sizing: border-box;
   font-family: "Arial", sans-serif;
   font-size: 16px;
+}
+
+@media (min-width: $small-width) {
+  html {
+    font-size: 20px;
+  }
 }
 
 *, *:before, *:after {
@@ -22,30 +34,23 @@ div:after:empty {
   -moz-user-select: none;
 }
 
-$medium-width: 80em;
-$small-width: 50em;
-
-$normal-sidebar-width: 20em;
-$medium-sidebar-width: 15em;
-
 div#sidebar {
+  position: static;
+  width: 100%;
+  height: auto;
+
   background-color: $color-primary-3;
-  position: fixed;
-  width: $normal-sidebar-width;
-  height: 100vh;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
 
   div#sidebar-top, div#sidebar-bottom {
-    position: absolute;
-
-    padding-left: 2.5em;
-    padding-right: 4.5em;
-
+    position: static;
+    padding-bottom: 16px;
     text-align: center;
   }
 
   div#sidebar-top {
-    top: 20px;
-
     h1 {
       color: white;
       font-size: 40px;
@@ -81,68 +86,75 @@ div#sidebar {
       font-size: 11px;
     }
     p#license-blurb {
-      margin-top: 1em;
+      margin-top: 16px;
     }
   }
 }
-@media(max-width: $medium-width) {
+@media(min-width: $medium-width) {
   div#sidebar {
+    position: fixed;
     width: $medium-sidebar-width;
+    height: 100vh;
+
+    div#sidebar-top, div#sidebar-bottom {
+      position: absolute;
+
+      padding-left: 2rem;
+      padding-right: 3rem;
+    }
+
+    div#sidebar-top {
+      top: 20px;
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  }
+}
+@media(min-width: $small-width) {
+  div#sidebar {
+    width: $normal-sidebar-width;
+
+    div#sidebar-top, div#sidebar-bottom {
+      padding-left: 1rem;
+      padding-right: 3rem;
+    }
 
     div#sidebar-top {
       h1 {
-        font-size: 30px;
+        font-size: 40px;
       }
-    }
-
-    div#sidebar-top, div#sidebar-bottom {
-      padding-left: 1.5em;
-      padding-right: 3.5em;
-    }
-  }
-}
-@media(max-width: $small-width) {
-  div#sidebar {
-    position: static;
-    width: 100%;
-    height: auto;
-
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    div#sidebar-top, div#sidebar-bottom {
-      position: static;
-      padding-bottom: 1em;
     }
   }
 }
 
 div#content {
-  margin-left: $normal-sidebar-width;
+  margin-left: 0px;
   min-height: 100vh;
-  padding-left: 2em;
+  padding-left: 32px;
   background-color: $color-secondary-1-1;
 
   pre#tera-context-dump {
     background-color: $color-secondary-2-0;
     color: white;
     width: min-content;
-    padding: 1em;
+    padding: 16px;
   }
 }
-@media (max-width: $medium-width) {
+@media (min-width: $medium-width) {
   div#content {
     margin-left: $medium-sidebar-width;
   }
 }
-@media (max-width: $small-width) {
+@media (min-width: $small-width) {
   div#content {
-    margin-left: 0px;
+    margin-left: $normal-sidebar-width;
   }
 }
 
 div.page-card {
-  padding-top: 2em;
+  padding-top: 2rem;
 }
 
 div.page-card, div.page {
@@ -155,35 +167,35 @@ div.page-card, div.page {
   }
   .page-date {
     color: $color-secondary-2-2;
-    padding-bottom: 2em;
+    padding-bottom: 32px;
   }
 }
 
 div.page {
   .page-title {
-    padding-top: 1em;
+    padding-top: 2rem;
   }
 
   div.main-content {
-    padding-bottom: 2em;
+    padding-bottom: 2rem;
 
     h1, h2, h3, h4, h5, h6 {
       color: $color-secondary-2-4;
-      padding-bottom: 0.5em;
+      padding-bottom: 0.5rem;
     }
 
     p {
-      padding-top: 0.25em;
-      padding-bottom: 0.25em;
-      line-height: 1.25em;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      line-height: 1.25rem;
     }
   }
 
-  padding-right: 2em;
-  max-width: 50em;
+  padding-right: 2rem;
+  max-width: 45rem;
 }
 
 pre {
   overflow: auto;
-  padding: 1em;
+  padding: 1rem;
 }
