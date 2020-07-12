@@ -1,5 +1,8 @@
 {% extends "base.html" -%}
 {%- import "sidebar.html" as sidebar -%}
+
+{%- block title -%} {{ page.title }} | {{ config.title }} {%- endblock -%}
+
 {%- block body -%}
 
 {%- set section = get_section(path=page.ancestors[0]) -%}
