@@ -54,7 +54,7 @@ div#sidebar {
   div#sidebar-bottom {
     bottom: 20px + (11px * 7);
 
-    div.items {
+    nav.items {
       position: relative;
 
       a {
@@ -168,7 +168,7 @@ div.page-card, div.page {
   }
 }
 
-div.page {
+article {
   .page-title {
     padding-top: 2rem;
   }

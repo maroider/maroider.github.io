@@ -6,7 +6,7 @@
     <h1>{{ title }}</h1>
   </div>
   <div id="sidebar-bottom">
-    <div class="items">
+    <nav class="items">
       {%- if home != "" -%}
       <a class="home" href="{{ home | safe }}">Home</a><br />
       {%- endif -%}
@@ -25,7 +25,7 @@
       {%- for link in links %}
         <a href="{{ link.url | safe }}">{{ link.label }}</a><br />
       {%- endfor %}
-    </div>
+    </nav>
   </div>
   {%- if page is object -%}
     <div id="sidebar-license">
