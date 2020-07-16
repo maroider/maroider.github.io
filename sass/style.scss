@@ -154,10 +154,13 @@ div.page-card {
   padding-top: 2rem;
 }
 
-div.page-card, div.page {
+div.page-card {
   .page-title {
     color: $color-secondary-2-4;
     text-decoration: none;
+  }
+  h1 {
+    font-size: 2em;
   }
   a.page-title:hover {
     text-decoration: underline;
@@ -169,10 +172,6 @@ div.page-card, div.page {
 }
 
 article {
-  .page-title {
-    padding-top: 2rem;
-  }
-
   div.main-content {
     padding-bottom: 2rem;
 

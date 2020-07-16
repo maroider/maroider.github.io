@@ -14,8 +14,10 @@
     {%- endif -%}
     {%- block content -%}
       <article>
-        <h1 class = "page-title">{{ page.title }}</h1>
-        <p class="page-date">{{ page.date }}</p>
+        <div class="page-card">
+          <h1 class = "page-title">{{ page.title }}</h1>
+          <p class="page-date">{{ page.date }}</p>
+        </div>
         <div class = "main-content">
           {{ page.content | safe }}
         </div>
