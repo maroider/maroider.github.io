@@ -1,4 +1,6 @@
-{% macro sidebar(title="", home="", section, links) %}
+{% import "license.html" as license %}
+
+{% macro sidebar(title="", home="", section, page="", links) %}
 <div id="sidebar">
   <div id="sidebar-top">
     <h1>{{ title }}</h1>
@@ -24,7 +26,11 @@
         <a href="{{ link.url | safe }}">{{ link.label }}</a><br />
       {%- endfor %}
     </div>
-    <p id="license-blurb">This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
   </div>
+  {%- if page is object -%}
+    <div id="sidebar-license">
+      {{ license::license_notice(year=page.date | date(format="%Y"), license=page.extra.license | default(value="")) }}
+    </div>
+  {%- endif -%}
 </div>
 {%- endmacro sidebar -%}

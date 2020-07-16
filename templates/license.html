@@ -1,0 +1,20 @@
+{% macro license_notice(author="", year="", license="") %}
+{%- if license == "" -%}
+  {%- if config.extra.default_license is undefined and author == "" -%}
+    {%- set author = config.extra.owner -%}
+  {%- else -%}
+    {%- set license=config.extra.default_license -%}
+  {%- endif -%}
+{%- endif -%}
+
+<p id="license-blurb">
+  {%- if license == "" -%}
+    Copyright © {{ year }} {{ author }}. All rights reserved.
+  {%- else -%}
+    {%- set license = load_data(path="license-list-data/json/details/" ~ license ~ ".json") -%}
+    {%- set license_name = license.name | trim_end_matches(pat=" License") -%}
+    {%- set license_name = license_name ~ " License" -%}
+    This work is licensed under a <a href="{{license.seeAlso[0]}}">{{ license_name }}.</a>
+  {%- endif -%}
+</p>
+{% endmacro license_notice %}

@@ -6,7 +6,7 @@
 {%- block body -%}
 
 {%- set section = get_section(path=page.ancestors[0]) -%}
-{{ sidebar::sidebar(title=config.title, home="/", section=section, links=config.extra.links) }}
+{{ sidebar::sidebar(title=config.title, home="/", section=section, page=page, links=config.extra.links) }}
 <div id="content">
   {%- if config.extra.dump_tera_context -%}
     <pre id="tera-context-dump">{{ __tera_context | escape }}</pre>

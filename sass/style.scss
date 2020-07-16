@@ -35,7 +35,7 @@ div#sidebar {
 
   background-color: $color-primary-3;
 
-  div#sidebar-top, div#sidebar-bottom {
+  div#sidebar-top, div#sidebar-bottom, div#sidebar-license {
     position: absolute;
 
     padding-left: 2rem;
@@ -52,7 +52,7 @@ div#sidebar {
   }
 
   div#sidebar-bottom {
-    bottom: 20px;
+    bottom: 20px + (11px * 7);
 
     div.items {
       position: relative;
@@ -63,6 +63,7 @@ div#sidebar {
 
         color: white;
         text-decoration: none;
+        font-size: 22px;
         margin-top: 2.5px;
         padding-bottom: 2.5px;
       }
@@ -70,17 +71,18 @@ div#sidebar {
         text-decoration: underline;
       }
       a.home {
-        font-size: 18px;
+        font-size: 24px;
         font-weight: bold;
       }
     }
+  }
+
+  div#sidebar-license {
+    bottom: 20px;
 
     p#license-blurb, p#license-blurb a {
       color: $color-secondary-2-1;
       font-size: 11px;
-    }
-    p#license-blurb {
-      margin-top: 16px;
     }
   }
 }
@@ -88,7 +90,7 @@ div#sidebar {
   div#sidebar {
     width: $medium-sidebar-width;
 
-    div#sidebar-top, div#sidebar-bottom {
+    div#sidebar-top, div#sidebar-bottom, div#sidebar-license {
       padding-right: 3rem;
     }
 
@@ -108,7 +110,7 @@ div#sidebar {
     padding-top: 10px;
     padding-bottom: 10px;
 
-    div#sidebar-top, div#sidebar-bottom {
+    div#sidebar-top, div#sidebar-bottom, div#sidebar-license {
       position: static;
       padding-right: 2rem;
       padding-bottom: 16px;
