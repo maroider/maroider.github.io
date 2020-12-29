@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://maroider.github.io/sitemap.xml
