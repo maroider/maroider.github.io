@@ -15,12 +15,12 @@
       {%- set ancestor = get_section(path=ancestor_path) -%}
         {%- for subsection_path in ancestor.subsections -%}
         {%- set subsection = get_section(path=subsection_path) %}
-          <a href="{{ "/" ~ subsection.path | safe }}">{{ subsection.title }}</a><br />
+          <a href="{{ subsection.path | safe }}">{{ subsection.title }}</a><br />
         {%- endfor -%}
       {%- endfor -%}
       {%- for subsection in section.subsections -%}
         {%- set subsection = get_section(path=subsection) %}
-        <a href="{{ "/" ~ subsection.path | safe }}">{{ subsection.title }}</a><br />
+        <a href="{{ subsection.path | safe }}">{{ subsection.title }}</a><br />
       {%- endfor -%}
       {%- for link in links %}
         <a href="{{ link.url | safe }}">{{ link.label }}</a><br />
