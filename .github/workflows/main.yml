@@ -1,31 +1,16 @@
 on: push
-name: Build and deploy on push
+name: Build and deploy GH Pages
 jobs:
   build:
-    name: Build and deploy
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/src'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           submodules: true
-
-      - name: Install zola
-        run: |
-          wget -q -O - \
-          "https://github.com/getzola/zola/releases/download/v0.15.2/zola-v0.15.2-x86_64-unknown-linux-gnu.tar.gz" \
-          | sudo tar xzf - -C /usr/local/bin
-      - name: Build
-        run: zola build
-
-      - name: Push
-        run: |
-          git checkout origin/master
-          mv -f public/* .
-          rmdir public
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions-bot@users.noreply.github.com"
-          git add -A
-          git commit -m "Automatic deploy"
-          git push "https://maroider:${{ secrets.ZOLA_TOKEN }}@github.com/maroider/maroider.github.io.git" master:master
+      - name: Build and deploy 
+        uses: shalzz/zola-deploy-action@v0.14.1
+        env:
+          PAGES_BRANCH: master 
+          TOKEN: ${{ secrets.ZOLA_TOKEN }}
