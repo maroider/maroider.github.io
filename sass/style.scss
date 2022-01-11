@@ -183,7 +183,12 @@ article {
     p {
       padding-top: 0.25rem;
       padding-bottom: 0.25rem;
-      line-height: 1.25rem;
+      line-height: 1.5rem;
+    }
+
+    pre, code {
+      background-color: $color-primary-1;
+      line-height: normal;
     }
   }
 
