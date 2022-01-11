@@ -21,10 +21,11 @@ jobs:
 
       - name: Push
         run: |
-          cd public
-          git init
+          git checkout origin/master
+          mv -f public/* .
+          rmdir public
           git config user.name "GitHub Actions"
           git config user.email "github-actions-bot@users.noreply.github.com"
-          git add .
+          git add -A
           git commit -m "Automatic deploy"
-          git push --force "https://maroider:${{ secrets.ZOLA_TOKEN }}@github.com/maroider/maroider.github.io.git" master:master
+          git push "https://maroider:${{ secrets.ZOLA_TOKEN }}@github.com/maroider/maroider.github.io.git" master:master
