@@ -2,14 +2,29 @@ on: push
 name: Build and deploy on push
 jobs:
   build:
-    name: shalzz/zola-deploy-action
+    name: Build and deploy
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - name: shalzz/zola-deploy-action
-      uses: shalzz/zola-deploy-action@master
-      env:
-        PAGES_BRANCH: master
-        BUILD_DIR: .
-        BUILD_FLAGS: --drafts
-        TOKEN: ${{ secrets.ZOLA_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Install zola
+        run: |
+          wget -q -O - \
+          "https://github.com/getzola/zola/releases/download/v0.15.2/zola-v0.15.2-x86_64-unknown-linux-gnu.tar.gz" \
+          | sudo tar xzf - -C /usr/local/bin
+      - name: Build
+        run: zola build
+
+      - name: Push
+        run: |
+          cd public
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions-bot@users.noreply.github.com"
+          git add .
+          git commit -m "Automatic deploy"
+          git push --force "https://maroider:${{ secrets.ZOLA_TOKEN }}@github.com/maroider/maroider.github.io.git" master:master
