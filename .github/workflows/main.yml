@@ -9,8 +9,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Build and deploy 
-        uses: shalzz/zola-deploy-action@v0.14.1
+      - name: Build and deploy
+        uses: shalzz/zola-deploy-action@v0.15.3
         env:
-          PAGES_BRANCH: master 
+          PAGES_BRANCH: master
           TOKEN: ${{ secrets.ZOLA_TOKEN }}
