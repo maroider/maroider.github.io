@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Arch and Windows dual-boot woes | maroider&#x27;s pages</title>
+    <link rel="stylesheet" href="https://maroider.net/style.css"></head>
+  <body>
+<div id="sidebar">
+  <div id="sidebar-top">
+    <h1>maroider&#x27;s pages</h1>
+  </div>
+  <div id="sidebar-bottom">
+    <nav class="items"><a class="home" href="/">Home</a><br />
+        <a href="/blog/">blog</a><br />
+        <a href="https://github.com/maroider/maroider.github.io">GitHub</a><br />
+    </nav>
+  </div><div id="sidebar-license">
+      <p id="license-blurb">This work is licensed under a <a href="https:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by&#x2F;4.0&#x2F;legalcode">Creative Commons Attribution 4.0 International License.</a></p>
+
+    </div></div>
+<div id="content">
+  <main><article>
+        <div class="page-card">
+          <h1 class = "page-title">Arch and Windows dual-boot woes</h1>
+          <p class="page-date">2020-07-10</p>
+        </div>
+        <div class = "main-content">
+          <p>I've been experimenting with Arch Linux lately, and have it installed on a separate drive from my Windows 10 installation. Unfortunately, I couldn't get <code>os-prober</code> to detect my Windows installation even with Windows being properly shut down and with <code>ntfs-3g</code> installed. I even tried various stanzas in the <a href="https://wiki.archlinux.org/index.php/GRUB#Dual-booting">dual-booting section</a> found on the Arch Wiki's page on GRUB. It simply refused to work.</p>
+<p>After faffing about inside GRUB's command-line I ended up doing <code>set root=(hd0,msdosX)</code> where <code>X</code> is a number between 1 and 3. The partition in question ended up being the partition that Windows boots from (not the partition labeled &quot;C:&quot;). <code>ls /</code> showed <code>bootmgr</code> as an entry. <code>bootmgr</code> is what BIOS/MBR installs of Windows use, which would be fine if I had installed Arch in BIOS/MBR mode. Thing is, that isn't what I had done. While I was installing Arch, I had completely forgotten how it was I had installed Windows since it was such a long time ago.</p>
+<p>Given that I would like to still have Arch installed in UEFI/GPT mode, I decided to have a look at wether it was feasible to make my BIOS/MBR Windows installation into a UEFI/GPT installation. It turns out that there's a command for exactly that built into Windows 10 now. It's got the desriptive name: <code>mbr2gpt</code>. Being somewhat scared of borking my Windows installed, I ran <code>mbr2gpt /validate</code> to check if it could be done. This is also where I should have made a full-disk back-up, just to be sure, but most of my important data is on another drive so I didn't do that. After <code>mbr2gpt</code> told be that the conversion was possible, I ran <code>mbr2gpt /convert /allowFullOS</code> and crossed my fingers.</p>
+<pre><code>MBR2GPT: Attempting to convert disk 0
+MBR2GPT: Retrieving layout of disk
+MBR2GPT: Validating layout, disk sector size is: 512 bytes
+MBR2GPT: Trying to shrink the system partition
+MBR2GPT: Trying to shrink the OS partition
+MBR2GPT: Creating the EFI system partition
+MBR2GPT: Installing the new boot files
+MBR2GPT: Performing the layout conversion
+MBR2GPT: Migrating default boot entry
+MBR2GPT: Adding recovery boot entry
+MBR2GPT: Fixing drive letter mapping
+MBR2GPT: Conversion completed successfully
+Call WinReReapir to repair WinRE
+MBR2GPT: Failed to update ReAgent.xml, please try to  manually disable and enable WinRE.
+MBR2GPT: Before the new system can boot properly you need to switch the firmware to boot to UEFI mode!
+</code></pre>
+<p>At this point I was a bit worried. I had no idea what it was that truly was wrong, but <code>Failed to update ReAgent.xml</code> didn't exactly sound all that great. I found <a href="https://www.tenforums.com/general-support/143526-reagentc-failed.html">this one forum thread</a> where someone else was getting this error message, but the instructions I found for fixing it weren't very helpful in the end. The one helpful thing I found there was a link to <a href="https://www.tenforums.com/performance-maintenance/131248-cant-enable-windows-recovery-environment.html#post1618841">another forum thread</a> where I found <code>reagentc /info</code>, which I promptly ran.</p>
+<pre><code>PS C:\Windows\System32&gt; reagentc &#x2F;info
+Windows Recovery Environment (Windows RE) and system reset configuration
+Information:
+
+    Windows RE status:         Disabled
+    Windows RE location:
+    Boot Configuration Data (BCD) identifier: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    Recovery image location:
+    Recovery image index:      0
+    Custom image location:
+    Custom image index:        0
+
+REAGENTC.EXE: Operation Successful.
+</code></pre>
+<p>I've tried to replicate the command's output at the time I ran it for the first time, but some things may be incorrect. There's also a UUID that I've taken the liberty to write over with <code>x</code>. In the second forum thread, the person asking for help got a UUID which was all zeroes. I do not remember what my result was.</p>
+<p>I tried running <code>reagentc /enable</code>, but that failed.</p>
+<p>After faffing about some more, I decided that I could deal with things if I completely broke Windows' ability to boot and promptly rebooted my computer. The boot process happened completely without incident and I was able to log into my account. Running <code>reagentc /info</code> now showed something more reasonable.</p>
+<pre><code>Windows Recovery Environment (Windows RE) and system reset configuration
+Information:
+
+    Windows RE status:         Enabled
+    Windows RE location:       \\?\GLOBALROOT\device\harddisk0\partition4\Recovery\WindowsRE
+    Boot Configuration Data (BCD) identifier: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+    Recovery image location:
+    Recovery image index:      0
+    Custom image location:
+    Custom image index:        0
+
+REAGENTC.EXE: Operation Successful.
+</code></pre>
+<p>In the end, I was probably worried about nothing.</p>
+<p>After that whole <code>mbr2gpt</code> debacle, I rebooted my computer and booted into my Arch install. After running <code>grub-mkconfig -o /boot/grub/grub.conf</code> again, I was overjoyed to see that <code>os-prober</code> <strong>finally</strong> picked up my Windows install. To make sure everything worked as it should, I rebooted, selected the &quot;Windows Boot Manager&quot; entry in GRUB and watched as Windows booted successfully.</p>
+<p>I can finally boot into Windows without mashing F8 to bring up the motherboard's boot manager.</p>
+
+        </div>
+      </article>
+  </main>
+</div>
+
+  </body>
+</html>
